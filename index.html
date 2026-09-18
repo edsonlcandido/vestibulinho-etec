@@ -1039,7 +1039,7 @@
 
         // Selecionar alternativa
         function selectAlternative(letter) {
-            if (answers[questions[currentQuestion].num].answered) return;
+            if (answers[currentQuestion].answered) return;
 
             selectedAnswer = letter;
 
