@@ -1301,7 +1301,7 @@
           "E": "apagam-se, exceto a lâmpada mais próxima da fonte. 18"
         },
         "texto_apoio": "Para garantir sua segurança, ciclistas devem utilizar equipamentos luminosos, especialmente ao pedalar à noite. Uma das opções é o uso de uma luz alimentada por um pequeno gerador acoplado à roda da bicicleta. Alguns desses sistemas utilizam circuitos com várias lâmpadas conectadas em série, garantindo maior visibilidade durante o trajeto.",
-        "tem_imagem": false,
+        "tem_imagem": true,
         "gabarito": "C"
       },
       {
