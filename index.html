@@ -82,6 +82,116 @@
             font-size: 1.1rem;
         }
 
+        /* Modal de Dificuldade */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .modal-content {
+            background: #1a1a2e;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8rem;
+            color: #8892b0;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #fff;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .modal-subtitle {
+            color: #8892b0;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .modal-difficulty-options {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .modal-diff-btn {
+            flex: 1;
+            padding: 20px 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #8892b0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .modal-diff-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .modal-diff-btn.active {
+            background: rgba(0, 212, 255, 0.15);
+            border-color: #00d4ff;
+            color: #fff;
+        }
+
+        .modal-diff-btn.active .modal-diff-helps {
+            color: #00d4ff;
+        }
+
+        .modal-diff-icon {
+            display: block;
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .modal-diff-name {
+            display: block;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+        }
+
+        .modal-diff-helps {
+            display: block;
+            font-size: 0.8rem;
+            color: #8892b0;
+        }
+
+        .modal-start-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+        }
+
         .mode-section {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 16px;
@@ -100,61 +210,6 @@
             color: #8892b0;
             margin-bottom: 20px;
             line-height: 1.5;
-        }
-
-        /* Seletor de Dificuldade */
-        .difficulty-selector {
-            display: flex;
-            gap: 10px;
-            margin: 20px 0;
-            justify-content: center;
-        }
-
-        .diff-btn {
-            flex: 1;
-            max-width: 140px;
-            padding: 15px 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: #8892b0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .diff-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .diff-btn.active {
-            background: rgba(0, 212, 255, 0.15);
-            border-color: #00d4ff;
-            color: #fff;
-        }
-
-        .diff-btn.active .diff-helps {
-            color: #00d4ff;
-        }
-
-        .diff-icon {
-            display: block;
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-        }
-
-        .diff-name {
-            display: block;
-            font-weight: 600;
-            font-size: 0.95rem;
-            margin-bottom: 3px;
-        }
-
-        .diff-helps {
-            display: block;
-            font-size: 0.75rem;
-            color: #8892b0;
         }
 
         .mode-btn {
@@ -739,26 +794,7 @@
             <div class="welcome-card">
                 <div class="welcome-icon">📚</div>
                 <h1>Estudo Vestibulinho ETEC!</h1>
-                <p class="welcome-subtitle">Escolha o modo e a dificuldade:</p>
-            </div>
-
-            <!-- Seletor de Dificuldade -->
-            <div class="difficulty-selector">
-                <button class="diff-btn" id="diff-facil" onclick="setDifficulty('facil')">
-                    <span class="diff-icon">😊</span>
-                    <span class="diff-name">Fácil</span>
-                    <span class="diff-helps" id="helps-facil">40 ajudas</span>
-                </button>
-                <button class="diff-btn active" id="diff-medio" onclick="setDifficulty('medio')">
-                    <span class="diff-icon">🤔</span>
-                    <span class="diff-name">Médio</span>
-                    <span class="diff-helps" id="helps-medio">20 ajudas</span>
-                </button>
-                <button class="diff-btn" id="diff-dificil" onclick="setDifficulty('dificil')">
-                    <span class="diff-icon">😤</span>
-                    <span class="diff-name">Difícil</span>
-                    <span class="diff-helps" id="helps-dificil">5 ajudas</span>
-                </button>
+                <p class="welcome-subtitle">Escolha como quer estudar:</p>
             </div>
 
             <div class="mode-section">
@@ -778,15 +814,15 @@
                 <h2 class="mode-title">🎯 Desafio Rápido</h2>
                 <p class="mode-description">Questões embaralhadas de ambos os semestres!</p>
                 <div class="challenge-grid">
-                    <button class="challenge-btn" onclick="startQuiz('mixed', 'desafio', 10)">
+                    <button class="challenge-btn" onclick="showDifficultyModal(10)">
                         <span class="challenge-count">10</span>
                         <span class="challenge-label">Questões 🔀</span>
                     </button>
-                    <button class="challenge-btn" onclick="startQuiz('mixed', 'desafio', 20)">
+                    <button class="challenge-btn" onclick="showDifficultyModal(20)">
                         <span class="challenge-count">20</span>
                         <span class="challenge-label">Questões 🔀</span>
                     </button>
-                    <button class="challenge-btn" onclick="startQuiz('mixed', 'desafio', 40)">
+                    <button class="challenge-btn" onclick="showDifficultyModal(40)">
                         <span class="challenge-count">40</span>
                         <span class="challenge-label">Questões 🔀</span>
                     </button>
@@ -798,9 +834,40 @@
                 <h3>💡 Dicas</h3>
                 <ul>
                     <li>Use <strong>"Eliminar Respostas"</strong> para remover alternativas erradas</li>
-                    <li id="tips-helps">Você tem <strong>20 ajudas</strong> neste modo</li>
+                    <li>Nos desafios, escolha a dificuldade para definir suas ajudas!</li>
                     <li>Revise suas respostas na aba <strong>"Todas"</strong></li>
                 </ul>
+            </div>
+        </div>
+
+        <!-- Modal de Dificuldade -->
+        <div id="difficulty-modal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close" onclick="closeDifficultyModal()">&times;</span>
+                <h2 class="modal-title">🎯 Escolha a Dificuldade</h2>
+                <p class="modal-subtitle" id="modal-question-count">10 questões</p>
+                
+                <div class="modal-difficulty-options">
+                    <button class="modal-diff-btn" id="modal-diff-facil" onclick="selectModalDifficulty('facil')">
+                        <span class="modal-diff-icon">😊</span>
+                        <span class="modal-diff-name">Fácil</span>
+                        <span class="modal-diff-helps" id="modal-helps-facil">10 ajudas</span>
+                    </button>
+                    <button class="modal-diff-btn active" id="modal-diff-medio" onclick="selectModalDifficulty('medio')">
+                        <span class="modal-diff-icon">🤔</span>
+                        <span class="modal-diff-name">Médio</span>
+                        <span class="modal-diff-helps" id="modal-helps-medio">5 ajudas</span>
+                    </button>
+                    <button class="modal-diff-btn" id="modal-diff-dificil" onclick="selectModalDifficulty('dificil')">
+                        <span class="modal-diff-icon">😤</span>
+                        <span class="modal-diff-name">Difícil</span>
+                        <span class="modal-diff-helps" id="modal-helps-dificil">Sem ajuda</span>
+                    </button>
+                </div>
+                
+                <button class="btn btn-primary modal-start-btn" onclick="startWithModalDifficulty()">
+                    Iniciar Desafio 🎯
+                </button>
             </div>
         </div>
 
@@ -903,7 +970,8 @@
         let helpUsedThisQuestion = false;
         let quizMode = 'simulado'; // 'simulado' ou 'desafio'
         let quizCount = 40; // Quantidade de questões
-        let currentDifficulty = 'medio'; // 'facil', 'medio', 'dificil'
+        let modalSelectedCount = 0; // Quantidade selecionada no modal
+        let modalSelectedDifficulty = 'medio'; // Dificuldade selecionada no modal
 
         // Carregar dados
         async function loadData() {
@@ -915,26 +983,52 @@
             }
         }
 
-        // Definir dificuldade
-        function setDifficulty(diff) {
-            currentDifficulty = diff;
+        // Mostrar modal de dificuldade
+        function showDifficultyModal(count) {
+            modalSelectedCount = count;
+            modalSelectedDifficulty = 'medio'; // Reset para médio
             
-            // Atualizar botões visuais
-            document.querySelectorAll('.diff-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('diff-' + diff).classList.add('active');
+            // Atualizar textos do modal
+            document.getElementById('modal-question-count').textContent = `${count} questões`;
+            document.getElementById('modal-helps-facil').textContent = `${count} ajudas`;
+            document.getElementById('modal-helps-medio').textContent = `${Math.floor(count/2)} ajudas`;
+            document.getElementById('modal-helps-dificil').textContent = 'Sem ajuda';
             
-            // Atualizar tips
-            const helps = getHelpsForDifficulty(diff);
-            document.getElementById('tips-helps').innerHTML = `Você tem <strong>${helps} ajudas</strong> neste modo`;
+            // Reset botões
+            document.querySelectorAll('.modal-diff-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('modal-diff-medio').classList.add('active');
+            
+            // Mostrar modal
+            document.getElementById('difficulty-modal').style.display = 'flex';
         }
 
-        // Calcular ajudas baseado na dificuldade
-        function getHelpsForDifficulty(diff) {
+        // Selecionar dificuldade no modal
+        function selectModalDifficulty(diff) {
+            modalSelectedDifficulty = diff;
+            
+            // Atualizar botões visuais
+            document.querySelectorAll('.modal-diff-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('modal-diff-' + diff).classList.add('active');
+        }
+
+        // Fechar modal
+        function closeDifficultyModal() {
+            document.getElementById('difficulty-modal').style.display = 'none';
+        }
+
+        // Iniciar com dificuldade do modal
+        function startWithModalDifficulty() {
+            closeDifficultyModal();
+            startQuiz('mixed', 'desafio', modalSelectedCount);
+        }
+
+        // Calcular ajudas baseado na dificuldade e quantidade
+        function getHelpsForDifficulty(diff, count) {
             switch(diff) {
-                case 'facil': return 40;
-                case 'medio': return 20;
-                case 'dificil': return 5;
-                default: return 20;
+                case 'facil': return count; // igual à quantidade
+                case 'medio': return Math.floor(count/2); // metade
+                case 'dificil': return 0; // sem ajuda
+                default: return Math.floor(count/2);
             }
         }
 
@@ -971,7 +1065,11 @@
             currentQuestion = 0;
             selectedAnswer = null;
             answers = {};
-            helpRemaining = getHelpsForDifficulty(currentDifficulty); // Ajudas baseado na dificuldade
+            // Para desafios: usar dificuldade do modal; para simulado: 40 ajudas fixas
+            const helps = mode === 'desafio' 
+                ? getHelpsForDifficulty(modalSelectedDifficulty, count)
+                : 40;
+            helpRemaining = helps;
 
             // Inicializar respostas
             questions.forEach((q, idx) => {

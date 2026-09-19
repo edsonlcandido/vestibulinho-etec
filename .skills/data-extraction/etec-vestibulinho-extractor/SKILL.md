@@ -49,10 +49,20 @@ r'Leia o texto para responder às questões (\d+) e (\d+)\.\s*\n([\s\S]*?)(?=Que
 r'Leia o texto para responder às questões de (\d+) a (\d+)\.\s*\n([\s\S]*?)(?=Questão\s+\d+|$)'
 
 // Pattern 3: Tirinha (comic strip - usually has image)
-r'Leia a tirinha\.\s*\n([\s\S]*?)(?=Questão)'
+// IMPORTANT: Use Questão\s+\d not just Questão to avoid stopping at "questões"
+r'Leia a tirinha\.\s*\n([\s\S]*?)(?=Questão\s+\d)'
 
 // Pattern 4: Song lyrics
-r'Leia o trecho da canção[^\n]*\n([\s\S]*?)(?=Questão)'
+// IMPORTANT: Use Questão\s+\d not just Questão - the text contains "questões" which breaks the pattern
+r'Leia o trecho da canção[^\n]*\n([\s\S]*?)(?=Questão\s+\d)'
+
+// Song lyrics association: Extract question range from the full match
+// The song text includes "questões de XX a YY" - use regex to find it
+song_match = re.search(r'questões de (\d+) a (\d+)', original_text, re.IGNORECASE)
+if song_match:
+    start, end = int(song_match.group(1)), int(song_match.group(2))
+    for q in range(start, end + 1):
+        support_blocks[q] = song_text
 ```
 
 ### 4. Question Data Structure
@@ -67,16 +77,76 @@ r'Leia o trecho da canção[^\n]*\n([\s\S]*?)(?=Questão)'
 }
 ```
 
-### 5. Detect Image Questions
-- Questions with `tinyurl` or similar shortened URLs have images
-- Mark with `tem_imagem: true`
-- Filter out when starting quiz: `allQuestions.filter(q => !q.tem_imagem)`
+### 5. Detect Image Questions (CRITICAL - This detection is error-prone!)
+**WARNING**: Not all questions with `tinyurl` links have images - some are just references.
+
+**Better detection logic:**
+```python
+def tem_realmente_imagem(questao):
+    enunciado = questao.get('enunciado', '').lower()
+    texto_apoio = questao.get('texto_apoio', '').lower()
+    
+    # Definitely have image
+    if 'observe a imagem' in enunciado: return True
+    if 'observe a figura' in enunciado: return True
+    if 'observe o gráfico' in enunciado: return True
+    if 'observe o mapa' in enunciado: return True
+    if 'analise a imagem' in enunciado: return True
+    if 'analise a figura' in enunciado: return True
+    if 'analise o quadrinho' in enunciado: return True
+    if 'observe o esquema' in enunciado: return True
+    if 'leia a tirinha' in enunciado: return True
+    if 'leia a charge' in enunciado: return True
+    if 'tirinha' in enunciado[:200]: return True
+    if 'quadrinho' in enunciado[:200]: return True
+    if 'charge' in enunciado[:200]: return True
+    
+    # Check texto_apoio for short content that looks like image description
+    if texto_apoio and len(texto_apoio) < 200:
+        if any(w in texto_apoio for w in ['imagem', 'figura', 'tirinha', 'charge', 'quadrinho']):
+            return True
+    
+    return False
+```
+
+**Simple approach (less accurate):**
+- Questions with `tinyurl` in enunciado MAY have images
+- But `tinyurl` can also be just a reference link in the text
+- If in doubt, mark as `tem_imagem: false` and let the quiz filter handle it later
+
+**Filter in quiz app:**
+```javascript
+allQuestions = allQuestions.filter(q => !q.tem_imagem);
+```
 
 ### 6. Complete Python Extraction Script
 ```python
 import re
 import subprocess
 import json
+
+def tem_realmente_imagem(questao):
+    """Detect if question actually has an image (not just a tinyurl reference)"""
+    enunciado = questao.get('enunciado', '').lower()
+    texto_apoio = questao.get('texto_apoio', '').lower()
+    
+    if 'observe a imagem' in enunciado: return True
+    if 'observe a figura' in enunciado: return True
+    if 'observe o gráfico' in enunciado: return True
+    if 'observe o mapa' in enunciado: return True
+    if 'analise a imagem' in enunciado: return True
+    if 'analise a figura' in enunciado: return True
+    if 'analise o quadrinho' in enunciado: return True
+    if 'observe o esquema' in enunciado: return True
+    if 'leia a tirinha' in enunciado: return True
+    if 'leia a charge' in enunciado: return True
+    if 'tirinha' in enunciado[:200]: return True
+    if 'quadrinho' in enunciado[:200]: return True
+    if 'charge' in enunciado[:200]: return True
+    if texto_apoio and len(texto_apoio) < 200:
+        if any(w in texto_apoio for w in ['imagem', 'figura', 'tirinha', 'charge']):
+            return True
+    return False
 
 def extract_all_questions(text, semester):
     # 1. Clean exam header
@@ -87,11 +157,12 @@ def extract_all_questions(text, semester):
     support_blocks = {}
     
     # 2. Extract support texts FIRST (before questions)
+    # IMPORTANT: Use Questão\s+\d to avoid stopping at "questões"
     patterns = [
         (r'Leia o texto para responder às questões (\d+) e (\d+)\.\s*\n([\s\S]*?)(?=Questão\s+\d+|$)', 'pair'),
         (r'Leia o texto para responder às questões de (\d+) a (\d+)\.\s*\n([\s\S]*?)(?=Questão\s+\d+|$)', 'range'),
-        (r'Leia a tirinha\.\s*\n([\s\S]*?)(?=Questão)', 'tirinha'),
-        (r'Leia o trecho da canção[^\n]*\n([\s\S]*?)(?=Questão)', 'song'),
+        (r'Leia a tirinha\.\s*\n([\s\S]*?)(?=Questão\s+\d)', 'tirinha'),
+        (r'Leia o trecho da canção[^\n]*\n([\s\S]*?)(?=Questão\s+\d)', 'song'),
     ]
     
     for pattern, type_ in patterns:
@@ -106,6 +177,15 @@ def extract_all_questions(text, semester):
                 support_text = ' '.join(m.group(3).strip().split())[:2000]
                 for q in range(start, end + 1):
                     support_blocks[q] = support_text
+            elif type_ == 'song':
+                # Find question range from full match text
+                song_text = ' '.join(m.group(1).strip().split())[:2000]
+                original = m.group(0)
+                range_match = re.search(r'questões de (\d+) a (\d+)', original, re.IGNORECASE)
+                if range_match:
+                    start, end = int(range_match.group(1)), int(range_match.group(2))
+                    for q in range(start, end + 1):
+                        support_blocks[q] = song_text
             else:
                 support_blocks[type_] = ' '.join(m.group(1).strip().split())[:2000]
     
@@ -126,13 +206,14 @@ def extract_all_questions(text, semester):
         for letter, text_alt in alt_matches[:5]:
             text_alt = ' '.join(text_alt.split())
             if text_alt:
-                alts[letter] = text_alt[:500]  # Limit length
+                alts[letter] = text_alt[:500]
         
-        if len(alts) >= 4:  # Valid question
+        if len(alts) >= 4:
             first_alt_pos = q_content.find('(A)')
             enunciado = q_content[:first_alt_pos].strip()[:1000] if first_alt_pos > 0 else q_content[:500]
             
-            has_image = 'tinyurl' in enunciado.lower()
+            # Use better image detection
+            has_image = tem_realmente_imagem({'enunciado': enunciado, 'texto_apoio': support_blocks.get(q_num, '')})
             
             questions.append({
                 'num': q_num,
@@ -155,11 +236,14 @@ def parse_gabarito(text):
 ```
 
 ## Pitfalls
+- **Song/support text regex**: Use `Questão\s+\d` not just `Questão` - the text contains "questões" which breaks the pattern
+- **Song question association**: After extracting song text, search the full match for "questões de XX a YY" to know which questions it applies to
+- **Image detection is tricky**: Not all questions with `tinyurl` have images - some are just reference links. Use keyword-based detection instead.
 - **Gabarito parsing**: Two tables side-by-side - must use pattern that captures both simultaneously
 - **URLs in text**: Remove tinyurl.com links before displaying
-- **Image questions**: Filter these out in quiz unless user specifically wants them
 - **pdftotext timing**: Use subprocess instead of Python library (faster)
 - **GitHub PAT**: Token needs "Contents: Read and Write" permission, not just "Pull Requests"
+- **Question number 0**: Some questions may have `num: 0` if extraction fails - verify and fix manually
 
 ## GitHub Push with PAT
 ```bash
@@ -169,9 +253,12 @@ git push origin main
 PAT must have: Contents → Read and Write
 
 ## Verification
-- Check question count: should be 50 per semester
+- Check question count: should be 50 per semester (some may be filtered due to images)
 - Check gabarito: should have 50 answers
-- Verify `tem_imagem` is correctly set for questions with images
+- Verify `tem_imagem` is correctly set - questions with tinyurl but no actual image should be marked `false`
+- Check questions 21-24 of 1st semester specifically - these often have song lyrics as support text
+- Verify no questions have `num: 0` - this indicates extraction failure
+- Check for duplicate question numbers
 
 ## Example JSON Structure
 ```json
