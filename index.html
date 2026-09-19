@@ -800,14 +800,9 @@
             <div class="mode-section">
                 <h2 class="mode-title">📝 Simulado</h2>
                 <p class="mode-description">Resolva as questões na ordem da prova</p>
-                <button class="mode-btn mode-btn-primary" onclick="startQuiz('1sem', 'simulado')">
-                    <span class="mode-btn-title">1º Semestre 2026</span>
-                    <span class="mode-btn-subtitle">40 questões 📝</span>
-                </button>
-                <button class="mode-btn mode-btn-primary" onclick="startQuiz('2sem', 'simulado')">
-                    <span class="mode-btn-title">2º Semestre 2026</span>
-                    <span class="mode-btn-subtitle">40 questões 📝</span>
-                </button>
+            <div id="simulado-buttons" class="mode-buttons-container">
+                <!-- Botões gerados dinamicamente pelo JavaScript -->
+            </div>
             </div>
 
             <div class="mode-section">
@@ -978,9 +973,33 @@
             try {
                 const response = await fetch('vestibulinho_data.json');
                 quizData = await response.json();
+                generateSimuladoButtons(); // Gerar botões dos simulados
             } catch (e) {
                 console.error('Erro ao carregar dados:', e);
             }
+        }
+
+        // Gerar botões de simulado dinamicamente
+        function generateSimuladoButtons() {
+            const container = document.getElementById('simulado-buttons');
+            container.innerHTML = '';
+            
+            // Ordenar por ano/semestre
+            const semesters = Object.keys(quizData).sort();
+            
+            semesters.forEach(key => {
+                const data = quizData[key];
+                const count = data.questoes.length;
+                
+                const btn = document.createElement('button');
+                btn.className = 'mode-btn mode-btn-primary';
+                btn.onclick = () => startQuiz(key, 'simulado');
+                btn.innerHTML = `
+                    <span class="mode-btn-title">${data.nome}</span>
+                    <span class="mode-btn-subtitle">${count} questões 📝</span>
+                `;
+                container.appendChild(btn);
+            });
         }
 
         // Mostrar modal de dificuldade
@@ -1042,12 +1061,14 @@
             let allQuestions;
             
             if (semester === 'mixed') {
-                // Juntar questões de ambos os semestres (até 40 de cada = 80 total)
-                const sem1 = [...quizData['1sem'].questoes].slice(0, 40);
-                const sem2 = [...quizData['2sem'].questoes].slice(0, 40);
-                allQuestions = [...sem1, ...sem2];
+                // Juntar questões de TODOS os semestres
+                const allSemesters = Object.keys(quizData);
+                allQuestions = [];
+                allSemesters.forEach(sem => {
+                    allQuestions = [...allQuestions, ...quizData[sem].questoes];
+                });
             } else {
-                allQuestions = [...quizData[semester].questoes].slice(0, 40);
+                allQuestions = [...quizData[semester].questoes];
             }
             
             // Filtrar questões com imagem
