@@ -102,6 +102,61 @@
             line-height: 1.5;
         }
 
+        /* Seletor de Dificuldade */
+        .difficulty-selector {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .diff-btn {
+            flex: 1;
+            max-width: 140px;
+            padding: 15px 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #8892b0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .diff-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .diff-btn.active {
+            background: rgba(0, 212, 255, 0.15);
+            border-color: #00d4ff;
+            color: #fff;
+        }
+
+        .diff-btn.active .diff-helps {
+            color: #00d4ff;
+        }
+
+        .diff-icon {
+            display: block;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .diff-name {
+            display: block;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 3px;
+        }
+
+        .diff-helps {
+            display: block;
+            font-size: 0.75rem;
+            color: #8892b0;
+        }
+
         .mode-btn {
             display: block;
             width: 100%;
@@ -683,26 +738,45 @@
         <div id="home-screen" class="screen active">
             <div class="welcome-card">
                 <div class="welcome-icon">📚</div>
-                <h1>Bem-vindo ao estudo Vestibulinho ETEC!</h1>
-                <p class="welcome-subtitle">Escolha como quer estudar:</p>
+                <h1>Estudo Vestibulinho ETEC!</h1>
+                <p class="welcome-subtitle">Escolha o modo e a dificuldade:</p>
+            </div>
+
+            <!-- Seletor de Dificuldade -->
+            <div class="difficulty-selector">
+                <button class="diff-btn" id="diff-facil" onclick="setDifficulty('facil')">
+                    <span class="diff-icon">😊</span>
+                    <span class="diff-name">Fácil</span>
+                    <span class="diff-helps" id="helps-facil">40 ajudas</span>
+                </button>
+                <button class="diff-btn active" id="diff-medio" onclick="setDifficulty('medio')">
+                    <span class="diff-icon">🤔</span>
+                    <span class="diff-name">Médio</span>
+                    <span class="diff-helps" id="helps-medio">20 ajudas</span>
+                </button>
+                <button class="diff-btn" id="diff-dificil" onclick="setDifficulty('dificil')">
+                    <span class="diff-icon">😤</span>
+                    <span class="diff-name">Difícil</span>
+                    <span class="diff-helps" id="helps-dificil">5 ajudas</span>
+                </button>
             </div>
 
             <div class="mode-section">
                 <h2 class="mode-title">📝 Simulado</h2>
-                <p class="mode-description">Resolva as questões na ordem da prova, como no dia do exame.</p>
+                <p class="mode-description">Resolva as questões na ordem da prova</p>
                 <button class="mode-btn mode-btn-primary" onclick="startQuiz('1sem', 'simulado')">
                     <span class="mode-btn-title">1º Semestre 2026</span>
-                    <span class="mode-btn-subtitle">40 questões na ordem</span>
+                    <span class="mode-btn-subtitle">40 questões 📝</span>
                 </button>
                 <button class="mode-btn mode-btn-primary" onclick="startQuiz('2sem', 'simulado')">
                     <span class="mode-btn-title">2º Semestre 2026</span>
-                    <span class="mode-btn-subtitle">40 questões na ordem</span>
+                    <span class="mode-btn-subtitle">40 questões 📝</span>
                 </button>
             </div>
 
             <div class="mode-section">
                 <h2 class="mode-title">🎯 Desafio Rápido</h2>
-                <p class="mode-description">Teste seus conhecimentos com questões embaralhadas de ambos os semestres!</p>
+                <p class="mode-description">Questões embaralhadas de ambos os semestres!</p>
                 <div class="challenge-grid">
                     <button class="challenge-btn" onclick="startQuiz('mixed', 'desafio', 10)">
                         <span class="challenge-count">10</span>
@@ -717,14 +791,14 @@
                         <span class="challenge-label">Questões 🔀</span>
                     </button>
                 </div>
-                <p class="challenge-note">Questões escolhidas aleatoriamente de todos os vestibulares</p>
+                <p class="challenge-note">Questões escolhidas aleatoriamente de ambos os semestres</p>
             </div>
 
             <div class="tips-card">
                 <h3>💡 Dicas</h3>
                 <ul>
-                    <li>Use a ajuda <strong>"Eliminar Respostas"</strong> para remover alternativas erradas</li>
-                    <li>Você tem <strong>10 ajudas</strong> por simulado/desafio</li>
+                    <li>Use <strong>"Eliminar Respostas"</strong> para remover alternativas erradas</li>
+                    <li id="tips-helps">Você tem <strong>20 ajudas</strong> neste modo</li>
                     <li>Revise suas respostas na aba <strong>"Todas"</strong></li>
                 </ul>
             </div>
@@ -829,6 +903,7 @@
         let helpUsedThisQuestion = false;
         let quizMode = 'simulado'; // 'simulado' ou 'desafio'
         let quizCount = 40; // Quantidade de questões
+        let currentDifficulty = 'medio'; // 'facil', 'medio', 'dificil'
 
         // Carregar dados
         async function loadData() {
@@ -837,6 +912,29 @@
                 quizData = await response.json();
             } catch (e) {
                 console.error('Erro ao carregar dados:', e);
+            }
+        }
+
+        // Definir dificuldade
+        function setDifficulty(diff) {
+            currentDifficulty = diff;
+            
+            // Atualizar botões visuais
+            document.querySelectorAll('.diff-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('diff-' + diff).classList.add('active');
+            
+            // Atualizar tips
+            const helps = getHelpsForDifficulty(diff);
+            document.getElementById('tips-helps').innerHTML = `Você tem <strong>${helps} ajudas</strong> neste modo`;
+        }
+
+        // Calcular ajudas baseado na dificuldade
+        function getHelpsForDifficulty(diff) {
+            switch(diff) {
+                case 'facil': return 40;
+                case 'medio': return 20;
+                case 'dificil': return 5;
+                default: return 20;
             }
         }
 
@@ -873,7 +971,7 @@
             currentQuestion = 0;
             selectedAnswer = null;
             answers = {};
-            helpRemaining = 10; // Reset ajudas
+            helpRemaining = getHelpsForDifficulty(currentDifficulty); // Ajudas baseado na dificuldade
 
             // Inicializar respostas
             questions.forEach((q, idx) => {
