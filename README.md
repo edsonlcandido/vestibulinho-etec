@@ -6,8 +6,8 @@ Ambiente interativo de estudo para o vestibulinho da ETEC.
 
 1. Abra o arquivo `index.html` no navegador
 2. Escolha o modo de estudo:
-   - **Simulado**: 40 questões na ordem
-   - **Desafio Rápido**: questões aleatórias (10, 20 ou 40)
+   - **Simulado**: Questões na ordem da prova (vários semestres)
+   - **Desafio Rápido**: Questões aleatórias de todos os semestres (10, 20 ou 40)
 
 ## 📁 Estrutura
 
@@ -15,13 +15,6 @@ Ambiente interativo de estudo para o vestibulinho da ETEC.
 estudo-vestibulinho/
 ├── index.html              # App principal
 ├── vestibulinho_data.json  # Questões e gabaritos
-├── materials/              # PDFs e textos de apoio
-│   ├── A-CADERNO-VESTIBULINHO-1SEM2026.pdf
-│   ├── A-CADERNO-VESTIBULINHO-2SEM2026.pdf
-│   ├── A-GABARITO-VESTIBULINHO-1SEM2026.pdf
-│   ├── A-GABARITO-VESTIBULINHO-2SEM2026.pdf
-│   ├── A-CADERNO-VESTIBULINHO-1SEM2026.txt
-│   └── A-CADERNO-VESTIBULINHO-2SEM2026.txt
 └── .skills/                # Skills para extração de dados
     ├── data-extraction/
     └── pdf-to-quiz-app/
@@ -29,11 +22,30 @@ estudo-vestibulinho/
 
 ## ✨ Funcionalidades
 
-- ✅ 50 questões por semestre (sem imagens)
+- ✅ **238 questões** de 5 provas (2024-2026)
+- ✅ Simulado e Desafio Rápido
+- ✅ Sistema de ajudas por dificuldade (Fácil, Médio, Difícil)
+- ✅ Eliminar respostas erradas
 - ✅ Textos de apoio extraídos automaticamente
-- ✅ Modo simulado e desafio
-- ✅ Ajuda "Eliminar Respostas" (10 por sessão)
 - ✅ Gabaritos oficiais completos
+
+## 📊 Provas Disponíveis
+
+| Prova | Questões |
+|-------|----------|
+| 2º Semestre 2026 | 46 |
+| 1º Semestre 2026 | 49 |
+| 1º Semestre 2025 | 47 |
+| 2º Semestre 2024 | 48 |
+| 1º Semestre 2024 | 48 |
+
+## 🎯 Dificuldade (Desafio)
+
+| Nível | Ajudas |
+|-------|--------|
+| Fácil | Igual à quantidade de questões |
+| Médio | Metade das questões |
+| Difícil | Sem ajuda |
 
 ## 🔧 Extração de Dados
 
