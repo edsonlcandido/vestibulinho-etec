@@ -235,6 +235,31 @@ def parse_gabarito(text):
     return gab
 ```
 
+## Adding New Exams
+
+When new PDF exams arrive, update the extraction script with all files:
+
+```python
+arquivos = [
+    ('1SEM2024', 'caderno.pdf', 'gabarito.pdf'),
+    ('1SEM2025', 'caderno.pdf', 'gabarito.pdf'),
+    # ... add new ones
+]
+
+# Then run extraction - app automatically shows new exams
+```
+
+**App pattern**: The quiz app generates buttons dynamically from JSON keys:
+```javascript
+function generateSimuladoButtons() {
+    const semesters = Object.keys(quizData).sort();
+    semesters.forEach(key => {
+        // Create button from quizData[key]
+    });
+}
+```
+No HTML changes needed when adding new exams!
+
 ## Pitfalls
 - **Song/support text regex**: Use `Questão\s+\d` not just `Questão` - the text contains "questões" which breaks the pattern
 - **Song question association**: After extracting song text, search the full match for "questões de XX a YY" to know which questions it applies to

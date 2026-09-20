@@ -984,8 +984,16 @@
             const container = document.getElementById('simulado-buttons');
             container.innerHTML = '';
             
-            // Ordenar por ano/semestre
-            const semesters = Object.keys(quizData).sort();
+            // Ordenar por ano decrescente, depois semestre decrescente
+            const semesters = Object.keys(quizData).sort((a, b) => {
+                const yearA = parseInt(a.slice(-4)); // 2026, 2025, etc
+                const yearB = parseInt(b.slice(-4));
+                const semA = parseInt(a.charAt(0)); // 1 ou 2
+                const semB = parseInt(b.charAt(0));
+                
+                if (yearB !== yearA) return yearB - yearA; // Ano decrescente
+                return semB - semA; // Semestre decrescente (2 antes de 1)
+            });
             
             semesters.forEach(key => {
                 const data = quizData[key];
