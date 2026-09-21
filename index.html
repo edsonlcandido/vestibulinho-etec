@@ -292,6 +292,11 @@
             box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
         }
 
+        .help-info-tutor {
+            color: #a78bfa !important;
+            font-size: 0.8rem !important;
+        }
+
         .mode-section {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 16px;
@@ -966,13 +971,13 @@
             </div>
         </div>
 
-        <!-- Modal do Edinho -->
+        <!-- Modal do Tutor -->
         <div id="edinho-modal" class="modal">
             <div class="modal-content edinho-modal-content">
                 <span class="modal-close" onclick="closeEdinhoModal()">&times;</span>
                 <div class="edinho-header">
                     <span class="edinho-icon">🤖</span>
-                    <h2 class="edinho-title">Edinho</h2>
+                    <h2 class="edinho-title">Tutor</h2>
                 </div>
                 <p class="edinho-subtitle" id="edinho-status">Procurando na biblioteca...</p>
                 <div class="edinho-animation">
@@ -1024,9 +1029,10 @@
                         </button>
                         <button class="help-btn help-btn-edinho" id="edinho-btn" onclick="askEdinho()">
                             <span>🤖</span>
-                            <span>Perguntar pro Edinho</span>
+                            <span>Ajuda do tutor</span>
                         </button>
                         <span class="help-info" id="help-info">Remove 1, 2 ou 3 alternativas erradas</span>
+                        <span class="help-info help-info-tutor" id="help-info-tutor">Ajuda direcionada a essa questão</span>
                     </div>
                     <div class="help-used-label" id="help-used-label" style="display: none;">
                         Ajuda usada nesta questão!
