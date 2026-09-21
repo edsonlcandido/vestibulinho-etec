@@ -192,6 +192,106 @@
             font-size: 1.1rem;
         }
 
+        /* Modal do Edinho */
+        .edinho-modal-content {
+            max-width: 500px;
+        }
+
+        .edinho-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .edinho-icon {
+            font-size: 2.5rem;
+        }
+
+        .edinho-title {
+            font-size: 1.8rem;
+            color: #fff;
+            margin: 0;
+        }
+
+        .edinho-subtitle {
+            color: #8892b0;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .edinho-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin: 20px 0;
+            min-height: 80px;
+        }
+
+        .book-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .book {
+            font-size: 2rem;
+            animation: bookBounce 1s ease-in-out infinite;
+        }
+
+        .book-1 { animation-delay: 0s; }
+        .book-2 { animation-delay: 0.2s; }
+        .book-3 { animation-delay: 0.4s; }
+
+        @keyframes bookBounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .search-icon {
+            font-size: 3rem;
+            animation: searchPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes searchPulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        .edinho-response {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #fff;
+            font-size: 1rem;
+            line-height: 1.6;
+            display: none;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .edinho-response strong {
+            color: #00d4ff;
+        }
+
+        .edinho-close-btn {
+            margin-top: 10px;
+        }
+
+        .help-btn-edinho {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            border: none !important;
+        }
+
+        .help-btn-edinho:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+        }
+
         .mode-section {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 16px;
@@ -866,6 +966,30 @@
             </div>
         </div>
 
+        <!-- Modal do Edinho -->
+        <div id="edinho-modal" class="modal">
+            <div class="modal-content edinho-modal-content">
+                <span class="modal-close" onclick="closeEdinhoModal()">&times;</span>
+                <div class="edinho-header">
+                    <span class="edinho-icon">🤖</span>
+                    <h2 class="edinho-title">Edinho</h2>
+                </div>
+                <p class="edinho-subtitle" id="edinho-status">Procurando na biblioteca...</p>
+                <div class="edinho-animation">
+                    <div class="book-stack">
+                        <div class="book book-1">📚</div>
+                        <div class="book book-2">📖</div>
+                        <div class="book book-3">📕</div>
+                    </div>
+                    <div class="search-icon">🔍</div>
+                </div>
+                <div id="edinho-response" class="edinho-response"></div>
+                <button class="btn btn-primary edinho-close-btn" id="edinho-close-btn" onclick="closeEdinhoModal()" style="display: none;">
+                    Entendi 👍
+                </button>
+            </div>
+        </div>
+
         <!-- Tela do Quiz -->
         <div id="quiz-screen" class="screen">
             <div class="stats">
@@ -897,6 +1021,10 @@
                             <span>🎯</span>
                             <span>Eliminar Respostas</span>
                             <span class="help-count" id="help-count">10</span>
+                        </button>
+                        <button class="help-btn help-btn-edinho" id="edinho-btn" onclick="askEdinho()">
+                            <span>🤖</span>
+                            <span>Perguntar pro Edinho</span>
                         </button>
                         <span class="help-info" id="help-info">Remove 1, 2 ou 3 alternativas erradas</span>
                     </div>
@@ -1057,6 +1185,91 @@
                 case 'dificil': return 0; // sem ajuda
                 default: return Math.floor(count/2);
             }
+        }
+
+        // ==========================================
+        // EDINHO - Ajuda com IA
+        // ==========================================
+        
+        function askEdinho() {
+            const currentQ = questions[currentQuestion];
+            if (!currentQ) return;
+            
+            // Mostrar modal
+            const modal = document.getElementById('edinho-modal');
+            const responseDiv = document.getElementById('edinho-response');
+            const statusText = document.getElementById('edinho-status');
+            const closeBtn = document.getElementById('edinho-close-btn');
+            
+            // Resetar modal
+            responseDiv.style.display = 'none';
+            responseDiv.innerHTML = '';
+            closeBtn.style.display = 'none';
+            statusText.textContent = 'Procurando na biblioteca...';
+            
+            modal.style.display = 'flex';
+            
+            // Preparar dados da pergunta
+            const perguntaData = {
+                num: currentQ.num,
+                enunciado: currentQ.enunciado,
+                alternativas: currentQ.alternativas,
+                texto_apoio: currentQ.texto_apoio || '',
+                gabarito: currentQ.gabarito || '',
+                tem_imagem: currentQ.tem_imagem || false
+            };
+            
+            // Mudar status durante carregamento
+            setTimeout(() => {
+                statusText.textContent = 'Consultando os livros...';
+            }, 2000);
+            
+            setTimeout(() => {
+                statusText.textContent = 'Foleando as apostilas...';
+            }, 4000);
+            
+            setTimeout(() => {
+                statusText.textContent = 'Quase lá...';
+            }, 6000);
+            
+            // Fazer request com timeout maior (90s)
+            fetch('https://ehtudo-n8n.pfdgdz.easypanel.host/webhook/pergunta-pro-edinho', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(perguntaData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                statusText.textContent = 'Prontinho! ✨';
+                
+                // Formatar resposta
+                let content = data.content || 'Desculpe, não consegui responder agora.';
+                // Converter ** para strong e \n para <br>
+                content = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                content = content.replace(/\n/g, '<br>');
+                
+                responseDiv.innerHTML = content;
+                responseDiv.style.display = 'block';
+                closeBtn.style.display = 'block';
+                
+                // Esconder animação
+                document.querySelector('.edinho-animation').style.display = 'none';
+            })
+            .catch(error => {
+                console.error('Erro ao chamar Edinho:', error);
+                statusText.textContent = 'Ops! Erro ao conectar. 😢';
+                responseDiv.innerHTML = 'Não consegui conectar com o Edinho agora. Tente novamente mais tarde.';
+                responseDiv.style.display = 'block';
+                closeBtn.style.display = 'block';
+            });
+        }
+        
+        function closeEdinhoModal() {
+            document.getElementById('edinho-modal').style.display = 'none';
+            // Mostrar animação novamente para próxima vez
+            document.querySelector('.edinho-animation').style.display = 'flex';
         }
 
         // Iniciar quiz
