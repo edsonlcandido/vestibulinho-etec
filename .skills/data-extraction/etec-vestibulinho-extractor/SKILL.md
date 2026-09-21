@@ -260,15 +260,59 @@ function generateSimuladoButtons() {
 ```
 No HTML changes needed when adding new exams!
 
+## Common texto_apoio Issues (IMPORTANT - Verify After Extraction!)
+
+The regex-based extraction may miss texto_apoio in these cases:
+
+### 1. Text is embedded in enunciado (DUPLICATED)
+Some questions have the support text inside the enunciado field itself (not as a separate block).
+Look for questions with "Baseando-se no texto" and check if they have `texto_apoio: ""`.
+
+**How to detect:**
+```python
+for key, val in data.items():
+    for q in val['questoes']:
+        if 'Baseando-se no texto' in q.get('enunciado', ''):
+            if not q.get('texto_apoio', '').strip():
+                print(f"MISSING: {key} Q{q['num']}")
+```
+
+**Fix: Manually extract from PDF and separate:**
+```python
+# Bad: texto_apoio is embedded in enunciado
+q['enunciado'] = "A águia-de-asa-redonda... texto longo ... Baseando-se no texto, sobre essa águia..."
+
+# Good: Separate them
+q['texto_apoio'] = "A águia-de-asa-redonda é uma ave de rapina..."
+q['enunciado'] = "Baseando-se no texto, sobre essa águia é correto afirmar que"
+```
+
+### 2. Multi-question support text (e.g., 34-36, 25)
+When a single text supports multiple questions, the text might be split across PDF pages with images between sections.
+
+**Fix:**
+```bash
+# Extract text before specific question from PDF
+pdftotext -layout "caderno.pdf" - | grep -B 100 "Questão 34" | head -50
+```
+
+### 3. Post-Extraction Verification Checklist
+After running extraction, ALWAYS verify:
+1. Questions with "Baseando-se no texto" have non-empty `texto_apoio`
+2. Questions 25, 34-36 of any semester have texto_apoio if the PDF has a text before them
+3. No questions have both texto_apoio AND the same text in enunciado (duplicated)
+
 ## Pitfalls
-- **Song/support text regex**: Use `Questão\s+\d` not just `Questão` - the text contains "questões" which breaks the pattern
-- **Song question association**: After extracting song text, search the full match for "questões de XX a YY" to know which questions it applies to
-- **Image detection is tricky**: Not all questions with `tinyurl` have images - some are just reference links. Use keyword-based detection instead.
-- **Gabarito parsing**: Two tables side-by-side - must use pattern that captures both simultaneously
+- **"Baseando-se no texto" questions**: Often have texto_apoio NOT captured by regex. MANUALLY VERIFY EACH ONE.
+- **Song/support text regex**: Use `Questão\s+\d` not just `Questão` - text contains "questões" which breaks pattern
+- **Song question association**: After extracting song text, search full match for "questões de XX a YY"
+- **Image detection**: Not all with `tinyurl` have images - some are just reference links
+- **Gabarito parsing**: Two tables side-by-side - use pattern that captures both simultaneously
 - **URLs in text**: Remove tinyurl.com links before displaying
-- **pdftotext timing**: Use subprocess instead of Python library (faster)
-- **GitHub PAT**: Token needs "Contents: Read and Write" permission, not just "Pull Requests"
-- **Question number 0**: Some questions may have `num: 0` if extraction fails - verify and fix manually
+- **pdftotext**: Use subprocess instead of Python library (faster)
+- **GitHub PAT**: Token needs "Contents: Read and Write" permission
+- **Question number 0**: Indicates extraction failure - verify and fix manually
+- **Texto deapoio duplicated in enunciado**: Fix manually by separating text from question
 
 ## GitHub Push with PAT
 ```bash
