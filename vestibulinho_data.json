@@ -1054,7 +1054,7 @@
       },
       {
         "num": 25,
-        "enunciado": "Qual energia é responsável pela manutenção da vida? É a energia química proveniente da quebra e da formação de ligações entre os átomos. A quebra de ligações é um processo que absorve energia, e a formação é um processo que libera energia. O balanço energético entre a quebra e a formação de ligações químicas, em certas reações, é responsável pela manutenção da vida. No metabolismo humano, a oxidação aeróbica de moléculas orgânicas, como a glicose, além de formar água e gás carbônico, libera energia para as atividades celulares. Baseando-se no texto, a quebra de ligações é um processo",
+        "enunciado": "Qual energia é responsável pela manutenção da vida?",
         "alternativas": {
           "A": "endotérmico, pois libera energia.",
           "B": "endotérmico, pois absorve energia.",
@@ -1062,7 +1062,7 @@
           "D": "exotérmico, pois libera energia.",
           "E": "exotérmico, pois absorve energia. 12 Leia o texto para responder às questões de 26 a 28. <http://tinyurl.com/3yhzzds3> Acesso em: 01.02.2024. Original colorido."
         },
-        "texto_apoio": "",
+        "texto_apoio": "É a energia química proveniente da quebra e da formação de ligações entre os átomos. A quebra de ligações é um processo que absorve energia, e a formação é um processo que libera energia. O balanço energético entre a quebra e a formação de ligações químicas, em certas reações, é responsável pela manutenção da vida. No metabolismo humano, a oxidação aeróbica de moléculas orgânicas, como a glicose, além de formar água e gás carbônico, libera energia para as atividades celulares.",
         "tem_imagem": false,
         "gabarito": "B"
       },
@@ -1188,7 +1188,7 @@
           "D": "astigmatismo.",
           "E": "hipermetropia. 16"
         },
-        "texto_apoio": "",
+        "texto_apoio": "Na anatomia do olho humano, a córnea, o cristalino e a retina trabalham perfeitamente, todos em conjunto e de forma adequada. O cristalino, lente biconvexa situada na região anterior ao globo ocular, possui a importante função de regular o foco dos objetos, mecanismo conhecido como acomodação visual. A retina, que é sensível à luz, reveste, internamente o globo ocular, cuja parte posterior serve como anteparo das imagens. Existem casos em que as imagens não se formam exatamente sobre a retina, originando o que chamamos de defeitos de visão. Esses defeitos ocorrem devido a uma possível deformação no globo ocular ou mesmo devido a uma defeituosa acomodação visual. Os defeitos de visão podem ser corrigidos por meio da utilização de óculos, de lentes de contato ou mesmo por cirurgia a laser. Um exemplo de defeito de visão ocorre quando a imagem se forma na frente da retina e não sobre ela.",
         "tem_imagem": false,
         "gabarito": "A"
       },
@@ -1202,7 +1202,7 @@
           "D": "Polarização",
           "E": "Dispersão"
         },
-        "texto_apoio": "",
+        "texto_apoio": "Na anatomia do olho humano, a córnea, o cristalino e a retina trabalham perfeitamente, todos em conjunto e de forma adequada. O cristalino, lente biconvexa situada na região anterior ao globo ocular, possui a importante função de regular o foco dos objetos, mecanismo conhecido como acomodação visual. A retina, que é sensível à luz, reveste, internamente o globo ocular, cuja parte posterior serve como anteparo das imagens. Existem casos em que as imagens não se formam exatamente sobre a retina, originando o que chamamos de defeitos de visão. Esses defeitos ocorrem devido a uma possível deformação no globo ocular ou mesmo devido a uma defeituosa acomodação visual. Os defeitos de visão podem ser corrigidos por meio da utilização de óculos, de lentes de contato ou mesmo por cirurgia a laser. Um exemplo de defeito de visão ocorre quando a imagem se forma na frente da retina e não sobre ela.",
         "tem_imagem": false,
         "gabarito": "B"
       },
@@ -1216,7 +1216,7 @@
           "D": "divergentes, que podem ser biconvexas, plano-convexas e côncavo-convexas.",
           "E": "divergentes, que podem ser bicôncavas, plano-côncavas e convexo-côncavas."
         },
-        "texto_apoio": "",
+        "texto_apoio": "Na anatomia do olho humano, a córnea, o cristalino e a retina trabalham perfeitamente, todos em conjunto e de forma adequada. O cristalino, lente biconvexa situada na região anterior ao globo ocular, possui a importante função de regular o foco dos objetos, mecanismo conhecido como acomodação visual. A retina, que é sensível à luz, reveste, internamente o globo ocular, cuja parte posterior serve como anteparo das imagens. Existem casos em que as imagens não se formam exatamente sobre a retina, originando o que chamamos de defeitos de visão. Esses defeitos ocorrem devido a uma possível deformação no globo ocular ou mesmo devido a uma defeituosa acomodação visual. Os defeitos de visão podem ser corrigidos por meio da utilização de óculos, de lentes de contato ou mesmo por cirurgia a laser. Um exemplo de defeito de visão ocorre quando a imagem se forma na frente da retina e não sobre ela.",
         "tem_imagem": false,
         "gabarito": "E"
       },
@@ -2498,7 +2498,7 @@
       },
       {
         "num": 25,
-        "enunciado": "A águia-de-asa-redonda é uma ave de rapina com uma das visões mais poderosas do reino animal. A sua capacidade visual é ampla, tanto em acuidade, quanto em distinção cromática, características essenciais para a eficiência de um predador. Estima-se que essa ave consiga reconhecer um roedor a 5 000m de altitude. Isso é possível, em parte, devido à altíssima densidade de cones, na fóvea do olho. Cones são células fotorreceptoras estimuladas pela percepção das cores primárias ópticas. Na águia-de-asa-redonda, os cones de tipos azul, verde, vermelho e duplos totalizam cerca de 1 milhão/mm2; enquanto o ser humano possui, aproximadamente, 200 000/mm2. Além da visão tetracromática, a águia possui uma fotossensibilidade ao espectro UV e apresenta filtros naturais para luz polarizada, o que lhe permite localizar peixes rapidamente. Baseando-se no texto apresentado, sobre essa águia é correto afirmar que",
+        "enunciado": "Baseando-se no texto apresentado, sobre essa águia é correto afirmar que",
         "alternativas": {
           "A": "enxerga, em período diurno, todas as presas na mesma cor acinzentada.",
           "B": "o fato de possuir cones duplos a impede de visualizar quaisquer cores.",
@@ -2506,7 +2506,7 @@
           "D": "a acuidade visual dela é, aproximadamente, cinco vezes inferior a de um ser humano com visão normal.",
           "E": "a capacidade de ela enxergar mais cores com melhor definição é superior à do ser humano."
         },
-        "texto_apoio": "",
+        "texto_apoio": "A águia-de-asa-redonda é uma ave de rapina com uma das visões mais poderosas do reino animal. A sua capacidade visual é ampla, tanto em acuidade, quanto em distinção cromática, características essenciais para a eficiência de um predador. Estima-se que essa ave consiga reconhecer um roedor a 5 000m de altitude. Isso é possível, em parte, devido à altíssima densidade de cones, na fóvea do olho. Cones são células fotorreceptoras estimuladas pela percepção das cores primárias ópticas. Na águia-de-asa-redonda, os cones de tipos azul, verde, vermelho e duplos totalizam cerca de 1 milhão/mm2; enquanto o ser humano possui, aproximadamente, 200 000/mm2. Além da visão tetracromática, a águia possui uma fotossensibilidade ao espectro UV e apresenta filtros naturais para luz polarizada, o que lhe permite localizar peixes rapidamente.",
         "tem_imagem": false,
         "gabarito": "E"
       },
@@ -2520,7 +2520,7 @@
           "D": "do Brasil.",
           "E": "do Peru."
         },
-        "texto_apoio": "",
+        "texto_apoio": "A águia-de-asa-redonda é uma ave de rapina com uma das visões mais poderosas do reino animal. A sua capacidade visual é ampla, tanto em acuidade, quanto em distinção cromática, características essenciais para a eficiência de um predador. Estima-se que essa ave consiga reconhecer um roedor a 5 000m de altitude. Isso é possível, em parte, devido à altíssima densidade de cones, na fóvea do olho. Cones são células fotorreceptoras estimuladas pela percepção das cores primárias ópticas. Na águia-de-asa-redonda, os cones de tipos azul, verde, vermelho e duplos totalizam cerca de 1 milhão/mm2; enquanto o ser humano possui, aproximadamente, 200 000/mm2. Além da visão tetracromática, a águia possui uma fotossensibilidade ao espectro UV e apresenta filtros naturais para luz polarizada, o que lhe permite localizar peixes rapidamente.",
         "tem_imagem": false,
         "gabarito": "E"
       },
@@ -2680,7 +2680,7 @@
       },
       {
         "num": 38,
-        "enunciado": "Em 2019, o Earthwatch Institute declarou que as abelhas são os seres vivos mais importantes do planeta, durante uma reunião da Royal Geographical Society de Londres. Essa declaração está associada ao fato de as abelhas serem os principais seres vivos responsáveis por polinizar cerca de 75% das culturas alimentares do mundo. No entanto, vários estudos demonstram que as abelhas enfrentam risco de extinção, em várias partes do mundo, devido a fatores como o desmatamento, o uso de agrotóxicos, a exposição a diferentes parasitas e as mudanças climáticas, que afetam a disponibilidade de flores e de alimentos. Baseando-se no texto, é correto afirmar que",
+        "enunciado": "Baseando-se no texto, é correto afirmar que",
         "alternativas": {
           "A": "a pulverização de agrotóxicos e o uso de inseticidas alteram o material genético das abelhas, deixando-as lentas, sem asas, com maior capacidade de polinização e de produção de mel.",
           "B": "o desmatamento beneficia a formação de enxames e a construção de novos ninhos de abelhas devido ao aumento da disponibilidade de alimento, como flores silvestres.",
@@ -2688,7 +2688,7 @@
           "D": "a ocorrência de doenças prejudiciais à visão e à memória de navegação das abelhas aumenta a capacidade de elas retornarem às colmeias.",
           "E": "o uso de agrotóxicos na agricultura para o controle de pragas acarreta a diminuição da população de abelhas, interferindo na polinização natural."
         },
-        "texto_apoio": "",
+        "texto_apoio": "Em 2019, o Earthwatch Institute declarou que as abelhas são os seres vivos mais importantes do planeta, durante uma reunião da Royal Geographical Society de Londres. Essa declaração está associada ao fato de as abelhas serem os principais seres vivos responsáveis por polinizar cerca de 75% das culturas alimentares do mundo. No entanto, vários estudos demonstram que as abelhas enfrentam risco de extinção, em várias partes do mundo, devido a fatores como o desmatamento, o uso de agrotóxicos, a exposição a diferentes parasitas e as mudanças climáticas, que afetam a disponibilidade de flores e de alimentos.",
         "tem_imagem": false,
         "gabarito": "E"
       },
@@ -2702,7 +2702,7 @@
           "D": "A reflexão total da radiação solar recebida pelo corpo aumenta a temperatura corporal.",
           "E": "A presença de proteínas vivas isolantes na pele é a responsável por facilitar a transferência térmica."
         },
-        "texto_apoio": "",
+        "texto_apoio": "Em 2019, o Earthwatch Institute declarou que as abelhas são os seres vivos mais importantes do planeta, durante uma reunião da Royal Geographical Society de Londres. Essa declaração está associada ao fato de as abelhas serem os principais seres vivos responsáveis por polinizar cerca de 75% das culturas alimentares do mundo. No entanto, vários estudos demonstram que as abelhas enfrentam risco de extinção, em várias partes do mundo, devido a fatores como o desmatamento, o uso de agrotóxicos, a exposição a diferentes parasitas e as mudanças climáticas, que afetam a disponibilidade de flores e de alimentos.",
         "tem_imagem": false,
         "gabarito": "C"
       },
