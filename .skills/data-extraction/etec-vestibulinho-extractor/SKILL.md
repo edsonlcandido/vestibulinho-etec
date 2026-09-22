@@ -296,7 +296,39 @@ When a single text supports multiple questions, the text might be split across P
 pdftotext -layout "caderno.pdf" - | grep -B 100 "Questão 34" | head -50
 ```
 
-### 3. Post-Extraction Verification Checklist
+### 4. Questions with "Baseando-se no texto" WITHOUT separate texto_apoio
+Some questions (like Q25, Q34, Q35 in various semesters) have the support text BEFORE the question header in the PDF, not after. This causes regex to miss them.
+
+**Detection pattern:**
+```python
+for key, val in data.items():
+    for q in val['questoes']:
+        if 'Baseando-se no texto' in q.get('enunciado', ''):
+            if not q.get('texto_apoio', '').strip():
+                print(f"MISSING: {key} Q{q['num']}")
+```
+
+**Fix - manual extraction from PDF:**
+```bash
+# Find text before question
+pdftotext -layout "caderno.pdf" - | grep -B 100 "Questão 34" | head -50
+```
+
+### 5. Song Lyrics (Frequent Issue)
+Songs like "O Trenzinho do Caipira" have lyrics that appear BEFORE the question. Look for:
+- "Leia a letra da música" or "Leia o trecho da canção"
+- "questões de XX a YY" in the header
+
+**Known songs to verify:**
+- 2SEM2026: "O Trenzinho do Caipira" (Ferreira Gullar / Heitor Villa-Lobos) → Q34, Q35
+
+### 6. Known Problematic Questions (Verify After Every Extraction)
+Always check these question numbers for missing texto_apoio:
+- Q25 (often has texto before header)
+- Q34, Q35, Q36 (often share a common text)
+- Any question with "Baseando-se no texto" in enunciado
+
+### 7. Post-Extraction Verification Checklist
 After running extraction, ALWAYS verify:
 1. Questions with "Baseando-se no texto" have non-empty `texto_apoio`
 2. Questions 25, 34-36 of any semester have texto_apoio if the PDF has a text before them
